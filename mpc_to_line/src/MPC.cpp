@@ -11,8 +11,8 @@ namespace plt = matplotlibcpp;
 using CppAD::AD;
 
 // TODO: Set N and dt
-size_t N = ? ;
-double dt = ? ;
+size_t N = 10;
+double dt = .1;
 
 // This value assumes the model presented in the classroom is used.
 //
@@ -61,6 +61,21 @@ class FG_eval {
     // Reference State Cost
     // TODO: Define the cost related the reference state and
     // any anything you think may be beneficial.
+    for (int i = 0; i < N; i++) {
+      fg[0] += CppAD::pow(vars[cte_start + i] - ref_cte, 2);
+      fg[0] += CppAD::pow(vars[epsi_start + i] - ref_epsi, 2);
+      fg[0] += CppAD::pow(vars[v_start + i] - ref_v, 2);
+    }
+
+    for (int i = 0; i < N - 1; i++) {
+      fg[0] += CppAD::pow(vars[delta_start + i], 2);
+      fg[0] += CppAD::pow(vars[a_start + i], 2);
+    }
+
+    for (int i = 0; i < N - 2; i++) {
+      fg[0] += CppAD::pow(vars[delta_start + i + 1] - vars[delta_start + i], 2);
+      fg[0] += CppAD::pow(vars[a_start + i + 1] - vars[a_start + i], 2);
+    }
 
     //
     // Setup Constraints
@@ -278,7 +293,7 @@ int main() {
   double epsi = ? ;
 
   Eigen::VectorXd state(6);
-  state << x, y, psi, v, cte, epsi;
+  state << x, y, psi, vTODO, cte, epsi;
 
   std::vector<double> x_vals = {state[0]};
   std::vector<double> y_vals = {state[1]};
