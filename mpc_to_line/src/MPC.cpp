@@ -11,13 +11,11 @@ namespace plt = matplotlibcpp;
 using CppAD::AD;
 
 // TODO: Set N and dt
-<<<<<<< HEAD
-size_t N = 10;
-double dt = .1;
-=======
+
+
 size_t N = 25 ;
 double dt = 0.05 ;
->>>>>>> 5c365210426482a80a36d5bc86dab239687ece6c
+
 
 // This value assumes the model presented in the classroom is used.
 //
@@ -66,29 +64,21 @@ class FG_eval {
     // Reference State Cost
     // TODO: Define the cost related the reference state and
     // any anything you think may be beneficial.
-<<<<<<< HEAD
-=======
-     // The part of the cost based on the reference state.
->>>>>>> 5c365210426482a80a36d5bc86dab239687ece6c
+    // The part of the cost based on the reference state.
+
     for (int i = 0; i < N; i++) {
       fg[0] += CppAD::pow(vars[cte_start + i] - ref_cte, 2);
       fg[0] += CppAD::pow(vars[epsi_start + i] - ref_epsi, 2);
       fg[0] += CppAD::pow(vars[v_start + i] - ref_v, 2);
     }
 
-<<<<<<< HEAD
-=======
     // Minimize the use of actuators.
->>>>>>> 5c365210426482a80a36d5bc86dab239687ece6c
     for (int i = 0; i < N - 1; i++) {
       fg[0] += CppAD::pow(vars[delta_start + i], 2);
       fg[0] += CppAD::pow(vars[a_start + i], 2);
     }
 
-<<<<<<< HEAD
-=======
     // Minimize the value gap between sequential actuations.
->>>>>>> 5c365210426482a80a36d5bc86dab239687ece6c
     for (int i = 0; i < N - 2; i++) {
       fg[0] += CppAD::pow(vars[delta_start + i + 1] - vars[delta_start + i], 2);
       fg[0] += CppAD::pow(vars[a_start + i + 1] - vars[a_start + i], 2);
@@ -336,7 +326,7 @@ int main() {
   double epsi = psi - atan(coeffs[1]);
 
   Eigen::VectorXd state(6);
-  state << x, y, psi, vTODO, cte, epsi;
+  state << x, y, psi, v, cte, epsi;
 
   std::vector<double> x_vals = {state[0]};
   std::vector<double> y_vals = {state[1]};
